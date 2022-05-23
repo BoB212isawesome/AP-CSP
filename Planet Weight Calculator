@@ -1,0 +1,36 @@
+//Dataset imported from Code.org, from https://devstronomy.com/#/datasets
+
+var gravityList = getColumn("Planets of our Solar System","Gravity");
+var planetList = getColumn("Planets of our Solar System","Planet");
+
+setScreen("home");
+
+onEvent("next", "click", function( ) {
+  setScreen("screen1");
+});
+
+onEvent("back", "click", function( ) {
+  setScreen("home");
+});
+
+function calculate(planet,weight){
+  var x;
+  if(planet=="Pick a Planet"){
+    setProperty("text_area1","text","Make sure a planet is selected");
+  }
+  else{
+    for(var i = 0; i < planetList.length; i++){
+    x=planetList[i];
+      if(x==planet){
+        setProperty("text_area1","text",("You would weigh about "+ (Math.round(
+        ((weight)/(gravityList[2]))*(gravityList[i]))*100)/100) +" lbs on "+(planet));
+      }
+    }
+  }
+}
+
+onEvent("calculate","click",function(){
+  var pick = getProperty("planetChoice","text");
+  var inputWeight = getProperty("weightInput","text");
+  calculate(pick,inputWeight);
+});
