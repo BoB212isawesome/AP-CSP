@@ -1,0 +1,65 @@
+var song = getColumn("Top 50 USA", "Track Name");
+//Sets the Track Name to variable song
+var id = getColumn("Top 50 USA", "id");
+//Sets the id to variable id
+
+function playClick() {
+  playSound("sound://category_app/perfect_clean_app_button_click_2.mp3", false);
+}
+//Function that plays a noise when called
+
+setProperty("topSong", "text", "");
+for(var i = 0; i < 10; i++){
+  setProperty("topSong", "text", getText("topSong")+id[i]+") "+song[i]+("\n"));
+}
+//Sets the text of topSong to the top 10 songs from Track Name column
+
+onEvent("randomize", "click", function( ) {
+  var random = randomNumber(0, song.length-1);
+  setProperty("randomSong", "text-color", "white");
+  setProperty("randomSong", "text", song[random]);
+  playClick();
+  if(random == 0||random==3||random==5){
+    setProperty("comment", "text", "I hear this song on the radio");
+    setProperty("comment", "hidden", false);
+  }
+  else if(random==10){
+    setProperty("comment", "text", "Did you say family? -Dom Toretto");
+    setProperty("comment", "hidden", false);
+  }
+  else{
+    setProperty("comment", "hidden", true);
+  }
+});
+//Chooses a random song from the songs column and sets it as text 
+//of randomSong along with adding comments to specific songs
+
+function goTo(screen) {
+  setScreen(screen);
+  playClick();
+}
+//Function to navigate screens and make a click noise when called
+
+onEvent("homeToTop", "click", function( ) {
+  goTo("topTen");
+});
+//Navigates to the topTen page
+
+onEvent("homeToRandom", "click", function( ) {
+  goTo("randTop");
+});
+//Navigates to the randTop page
+
+onEvent("randTop_back", "click", function( ) {
+  goTo("home");
+});
+//Navigates to the home page
+
+onEvent("topTen_back", "click", function( ) {
+  goTo("home");
+});
+//Navigates to the home page
+
+
+
+
